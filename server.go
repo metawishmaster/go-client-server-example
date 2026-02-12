@@ -122,7 +122,7 @@ func (s *Server) Run() {
 }
 
 func main() {
-	port := flag.String("port", "4040", "server port")
+	port := flag.String("port", "8080", "server port")
 	flag.Parse()
 
 	server := &Server{
