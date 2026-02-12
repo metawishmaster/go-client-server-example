@@ -89,6 +89,17 @@ func (c *Client) Run(elapsedTime *time.Duration) error {
 		return fmt.Errorf("reader error: %v", err)
 	}
 
+	response = strings.TrimSpace(response)
+	if response != "GOTESTACK" {
+		fmt.Printf("wrong ack message: %s\n", response)
+		return nil //fmt.Errorf("connection error: %v", err)
+	}
+	response, err = reader.ReadString('\n')
+	if err != nil {
+		fmt.Printf("read error: %v\n", err)
+		return fmt.Errorf("connection error: %v", err)
+	}
+
 	*elapsedTime = time.Since(startTime)
 
 	response = strings.TrimSpace(response)

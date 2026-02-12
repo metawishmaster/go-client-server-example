@@ -56,6 +56,7 @@ func (s *Server) processNumbers(data string) (string, error) {
 func (s *Server) handleConnection(conn net.Conn) {
 	defer conn.Close()
 
+	conn.Write([]byte("GOTESTACK\n"))
 	clientAddr := conn.RemoteAddr().String()
 
 	s.mu.Lock()
