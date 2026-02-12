@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"math/rand"
 	"net"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -39,6 +40,28 @@ func (c *Client) numbersToString(numbers []int) string {
 }
 
 func (c *Client) Run(elapsedTime *time.Duration) error {
+	endsWithPort := func(s string) bool {
+		pattern := regexp.MustCompile(`:\d{1,5}$`)
+		return pattern.MatchString(s)
+	}
+
+	if !endsWithPort(c.serverAddr) {
+		c.serverAddr += ":8080"
+	}
+	/*
+		ipNport := strings.Split(c.serverAddr, ":")
+		//	strIp := ipNport[0]
+		strPort := ipNport[1]
+
+		port, err := strconv.Atoi(strPort)
+		if err != nil || port < 0 || port > 65535 {
+			return fmt.Errorf("invalid port", os.ErrInvalid)
+		}
+		//	ip, err := strconv.Atoi(strIp)
+	*/
+	host, port, err := net.SplitHostPort(c.serverAddr)
+	fmt.Printf("connecting to %s:%s\n", host, port)
+
 	conn, err := net.DialTimeout("tcp", c.serverAddr, c.timeout)
 	if err != nil {
 		return fmt.Errorf("connection error: %v", err)
