@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
+	"go-client-server-example/global"
 	"math/rand"
 	"net"
 	"regexp"
@@ -90,7 +91,7 @@ func (c *Client) Run(elapsedTime *time.Duration) error {
 	}
 
 	response = strings.TrimSpace(response)
-	if response != "GOTESTACK" {
+	if response != global.GOTESTACK {
 		fmt.Printf("wrong ack message: %s\n", response)
 		return nil //fmt.Errorf("connection error: %v", err)
 	}

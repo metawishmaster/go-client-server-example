@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
+	"go-client-server-example/global"
 	"net"
 	"sort"
 	"strconv"
@@ -56,7 +57,7 @@ func (s *Server) processNumbers(data string) (string, error) {
 func (s *Server) handleConnection(conn net.Conn) {
 	defer conn.Close()
 
-	conn.Write([]byte("GOTESTACK\n"))
+	conn.Write([]byte(global.GOTESTACK))
 	clientAddr := conn.RemoteAddr().String()
 
 	s.mu.Lock()
